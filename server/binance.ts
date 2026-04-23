@@ -14,21 +14,30 @@ export const exchange = new ccxt.binance({
   },
 });
 
+export const fallbackExchange = new ccxt.bybit({ enableRateLimit: true });
+
 export async function fetchOHLCV(symbol: string, timeframe: string, limit: number = 100) {
+  let ohlcv: number[][] = [];
   try {
-    const ohlcv = await exchange.fetchOHLCV(symbol, timeframe, undefined, limit);
-    return ohlcv.map(candle => ({
-      timestamp: candle[0],
-      open: candle[1],
-      high: candle[2],
-      low: candle[3],
-      close: candle[4],
-      volume: candle[5],
-    }));
-  } catch (error) {
-    console.error(`Error fetching OHLCV for ${symbol} ${timeframe}:`, error);
-    return [];
+    ohlcv = await exchange.fetchOHLCV(symbol, timeframe, undefined, limit);
+  } catch (error: any) {
+    console.error(`Binance fetch failed for ${symbol}, trying Bybit fallback... (${error.message})`);
+    try {
+      ohlcv = await fallbackExchange.fetchOHLCV(symbol, timeframe, undefined, limit);
+    } catch (fallbackError) {
+      console.error(`Fallback fetch also failed for ${symbol}:`, fallbackError);
+      return [];
+    }
   }
+
+  return ohlcv.map(candle => ({
+    timestamp: candle[0],
+    open: candle[1],
+    high: candle[2],
+    low: candle[3],
+    close: candle[4],
+    volume: candle[5],
+  }));
 }
 
 export async function fetchFundingRate(symbol: string) {
