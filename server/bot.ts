@@ -67,10 +67,20 @@ export function getRecentSignals() {
   return recentSignals;
 }
 
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
 async function initData() {
   for (const symbol of SYMBOLS) {
-    const ohlcv = await fetchOHLCV(symbol, '5m', 500);
-    ohlcvData[symbol] = ohlcv;
+    try {
+      const ohlcv = await fetchOHLCV(symbol, '5m', 500);
+      if (ohlcv && ohlcv.length > 0) {
+        ohlcvData[symbol] = ohlcv;
+      }
+      // Small delay between fetches to avoid Binance DDoS Protection (418) ban
+      await delay(1000); 
+    } catch (err) {
+      console.error(`Skipping initial fetch for ${symbol} due to error:`, err);
+    }
   }
 }
 
