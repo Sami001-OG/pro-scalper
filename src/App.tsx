@@ -169,25 +169,25 @@ export default function App() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatusCard 
                   title="Current Price (Live)" 
-                  value={`$${status.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+                  value={`$${(status?.price || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                   icon={<DollarSign className="text-neutral-400" />}
                 />
                 <StatusCard 
                   title="Trend (5m)" 
-                  value={status.currentTrend}
-                  valueColor={status.currentTrend === 'BULLISH' ? 'text-green-500' : status.currentTrend === 'BEARISH' ? 'text-red-500' : 'text-yellow-500'}
-                  icon={status.currentTrend === 'BULLISH' ? <TrendingUp className="text-green-500" /> : <TrendingDown className="text-red-500" />}
+                  value={status?.currentTrend || 'UNKNOWN'}
+                  valueColor={status?.currentTrend === 'BULLISH' ? 'text-green-500' : status?.currentTrend === 'BEARISH' ? 'text-red-500' : 'text-yellow-500'}
+                  icon={status?.currentTrend === 'BULLISH' ? <TrendingUp className="text-green-500" /> : <TrendingDown className="text-red-500" />}
                 />
                 <StatusCard 
                   title="Funding Rate" 
-                  value={`${(status.fundingRate * 100).toFixed(4)}%`}
-                  valueColor={status.fundingRate < 0 ? 'text-green-500' : 'text-red-500'}
+                  value={`${((status?.fundingRate || 0) * 100).toFixed(4)}%`}
+                  valueColor={(status?.fundingRate || 0) < 0 ? 'text-green-500' : 'text-red-500'}
                   icon={<Activity className="text-neutral-400" />}
                 />
                 <StatusCard 
                   title="5m StochRSI(K)" 
-                  value={status.rsi15m.toFixed(2)}
-                  valueColor={status.rsi15m < 20 ? 'text-green-500' : status.rsi15m > 80 ? 'text-red-500' : 'text-neutral-50'}
+                  value={(status?.rsi15m || 0).toFixed(2)}
+                  valueColor={(status?.rsi15m || 0) < 20 ? 'text-green-500' : (status?.rsi15m || 0) > 80 ? 'text-red-500' : 'text-neutral-50'}
                   icon={<Activity className="text-neutral-400" />}
                 />
               </div>
