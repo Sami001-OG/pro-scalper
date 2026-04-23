@@ -1,0 +1,5 @@
+{
+  "name": "Crypto Signal Generator",
+  "description": "A BTC/USDT perpetual trading bot that generates signals based on 4H trend, funding rates, and 15m entry triggers, with Telegram notifications.",
+  "requestFramePermissions": []
+}
