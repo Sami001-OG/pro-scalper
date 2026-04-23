@@ -33,3 +33,5 @@ To run the bot, ensure the following environment variables are configured in you
 
 You can access the live dashboard here:
 (https://pro-scalper.onrender.com/)
+
+And here is the live telegram channel powered by this scalper bot : https://t.me/+0R9q9Mzo-6o2ODVl
