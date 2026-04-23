@@ -66,8 +66,10 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
+    const distPath = path.join(process.cwd(), 'dist');
+    app.use(express.static(distPath));
     app.get('*', (req, res) => {
-      res.send('Trading Bot API is running in background.');
+      res.sendFile(path.join(distPath, 'index.html'));
     });
   }
 
