@@ -32,4 +32,4 @@ To run the bot, ensure the following environment variables are configured in you
 ## Project Link
 
 You can access the live dashboard here:
-https://only-btc-trading-production.up.railway.app/
+(https://pro-scalper.onrender.com/)
