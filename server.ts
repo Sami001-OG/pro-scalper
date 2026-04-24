@@ -29,6 +29,16 @@ async function startServer() {
     res.json(getRecentSignals());
   });
 
+  app.get('/api/test-telegram', async (req, res) => {
+    try {
+      const { sendTelegramMessage } = await import('./server/telegram');
+      await sendTelegramMessage('🔔 *TEST MESSAGE* 🔔\n\nYour Telegram connection is working perfectly! Live trades will appear here as soon as market conditions trigger them.');
+      res.json({ success: true, message: 'Test message sent to Telegram' });
+    } catch (error: any) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
   app.get('/api/backtest', async (req, res) => {
     try {
       const slMultiplier = req.query.sl ? parseFloat(req.query.sl as string) : 1.5;
