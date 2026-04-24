@@ -160,7 +160,7 @@ export default function App() {
                   onClick={async () => {
                     try {
                       await fetch('/api/test-telegram');
-                      alert('Test message sent! Check your Telegram app. If it didn\\'t arrive, your TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is missing or incorrect in Render environment variables.');
+                      alert("Test message sent! Check your Telegram app. If it didn't arrive, your TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is missing or incorrect in Render environment variables.");
                     } catch(e) {
                       alert('Failed to send test message');
                     }
