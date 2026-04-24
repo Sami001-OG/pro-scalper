@@ -155,9 +155,24 @@ export default function App() {
               </button>
             </div>
             {activeTab === 'live' && (
-              <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${status?.isRunning ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
-                <div className={`w-2 h-2 rounded-full ${status?.isRunning ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
-                {status?.isRunning ? 'Bot Active' : 'Bot Offline'}
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={async () => {
+                    try {
+                      await fetch('/api/test-telegram');
+                      alert('Test message sent! Check your Telegram app. If it didn\\'t arrive, your TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is missing or incorrect in Render environment variables.');
+                    } catch(e) {
+                      alert('Failed to send test message');
+                    }
+                  }}
+                  className="px-4 py-2 bg-[#0088cc]/10 hover:bg-[#0088cc]/20 text-[#0088cc] border border-[#0088cc]/30 rounded-full text-sm font-medium transition-colors"
+                >
+                  Test Telegram
+                </button>
+                <div className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${status?.isRunning ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
+                  <div className={`w-2 h-2 rounded-full ${status?.isRunning ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
+                  {status?.isRunning ? 'Bot Active' : 'Bot Offline'}
+                </div>
               </div>
             )}
           </div>
