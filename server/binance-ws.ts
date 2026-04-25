@@ -21,7 +21,7 @@ export function startBinanceWS(callbacks: {
     'ethusdt@kline_5m',
     'solusdt@kline_5m'
   ];
-  const wsUrl = `wss://fstream.binance.com/stream?streams=${streams.join('/')}`;
+  const wsUrl = `wss://fstream.binance.com/market/stream?streams=${streams.join('/')}`;
   
   let ws = new WebSocket(wsUrl);
 
