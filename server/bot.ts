@@ -228,11 +228,7 @@ function manageActiveTrades(symbol: string, currentPrice: number) {
     if (trade.type === 'LONG') {
       trade.pnl = ((currentPrice - trade.entryPrice) / trade.entryPrice) * 100;
 
-      if (isStochReversedLong && trade.pnl > 0.1) {
-        trade.status = 'CLOSED';
-        closed = true;
-        sendTelegramMessage(`⚠️ *EARLY EXIT (StochRSI Reversal)* ⚠️\n\n*Pair:* ${symbol}\n*Type:* ${trade.type}\n*Price:* $${currentPrice.toFixed(4)}\n*PnL:* +${trade.pnl.toFixed(2)}%`);
-      } else if (currentPrice <= trade.stopLoss) {
+      if (currentPrice <= trade.stopLoss) {
         trade.status = 'STOPPED';
         closed = true;
         sendTelegramMessage(`🛑 *STOP LOSS HIT* 🛑\n\n*Pair:* ${symbol}\n*Type:* ${trade.type}\n*Price:* $${currentPrice.toFixed(4)}`);
@@ -244,11 +240,7 @@ function manageActiveTrades(symbol: string, currentPrice: number) {
     } else {
       trade.pnl = ((trade.entryPrice - currentPrice) / trade.entryPrice) * 100;
 
-      if (isStochReversedShort && trade.pnl > 0.1) {
-        trade.status = 'CLOSED';
-        closed = true;
-        sendTelegramMessage(`⚠️ *EARLY EXIT (StochRSI Reversal)* ⚠️\n\n*Pair:* ${symbol}\n*Type:* ${trade.type}\n*Price:* $${currentPrice.toFixed(4)}\n*PnL:* +${trade.pnl.toFixed(2)}%`);
-      } else if (currentPrice >= trade.stopLoss) {
+      if (currentPrice >= trade.stopLoss) {
         trade.status = 'STOPPED';
         closed = true;
         sendTelegramMessage(`🛑 *STOP LOSS HIT* 🛑\n\n*Pair:* ${symbol}\n*Type:* ${trade.type}\n*Price:* $${currentPrice.toFixed(4)}`);
