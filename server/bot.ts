@@ -220,22 +220,17 @@ function manageActiveTrades(symbol: string, currentPrice: number) {
 
     let closed = false;
 
-    // Check Stoch RSI Reversal (K crosses D backwards) or Momentum reversal
-    const stochRSI = latestStochRSI[symbol];
-    const isStochReversedLong = stochRSI.k < stochRSI.d;
-    const isStochReversedShort = stochRSI.k > stochRSI.d;
-
     if (trade.type === 'LONG') {
       trade.pnl = ((currentPrice - trade.entryPrice) / trade.entryPrice) * 100;
 
       if (currentPrice <= trade.stopLoss) {
         trade.status = 'STOPPED';
         closed = true;
-        sendTelegramMessage(`🛑 *STOP LOSS HIT* 🛑\n\n*Pair:* ${symbol}\n*Type:* ${trade.type}\n*Price:* $${currentPrice.toFixed(4)}`);
+        sendTelegramMessage(`coin : ${symbol.split('/')[0].toLowerCase()}usdt\ndirection : ${trade.type.toLowerCase()} sl hit\nprice:${currentPrice.toFixed(4)}\npnl:${trade.pnl.toFixed(2)}%`);
       } else if (currentPrice >= trade.tp) {
         trade.status = 'CLOSED';
         closed = true;
-        sendTelegramMessage(`✅ *TAKE PROFIT HIT* ✅\n\n*Pair:* ${symbol}\n*Type:* ${trade.type}\n*Price:* $${currentPrice.toFixed(4)}`);
+        sendTelegramMessage(`coin : ${symbol.split('/')[0].toLowerCase()}usdt\ndirection : ${trade.type.toLowerCase()} tp hit\nprice:${currentPrice.toFixed(4)}\npnl:${trade.pnl.toFixed(2)}%`);
       }
     } else {
       trade.pnl = ((trade.entryPrice - currentPrice) / trade.entryPrice) * 100;
@@ -243,11 +238,11 @@ function manageActiveTrades(symbol: string, currentPrice: number) {
       if (currentPrice >= trade.stopLoss) {
         trade.status = 'STOPPED';
         closed = true;
-        sendTelegramMessage(`🛑 *STOP LOSS HIT* 🛑\n\n*Pair:* ${symbol}\n*Type:* ${trade.type}\n*Price:* $${currentPrice.toFixed(4)}`);
+        sendTelegramMessage(`coin : ${symbol.split('/')[0].toLowerCase()}usdt\ndirection : ${trade.type.toLowerCase()} sl hit\nprice:${currentPrice.toFixed(4)}\npnl:${trade.pnl.toFixed(2)}%`);
       } else if (currentPrice <= trade.tp) {
         trade.status = 'CLOSED';
         closed = true;
-        sendTelegramMessage(`✅ *TAKE PROFIT HIT* ✅\n\n*Pair:* ${symbol}\n*Type:* ${trade.type}\n*Price:* $${currentPrice.toFixed(4)}`);
+        sendTelegramMessage(`coin : ${symbol.split('/')[0].toLowerCase()}usdt\ndirection : ${trade.type.toLowerCase()} tp hit\nprice:${currentPrice.toFixed(4)}\npnl:${trade.pnl.toFixed(2)}%`);
       }
     }
 
