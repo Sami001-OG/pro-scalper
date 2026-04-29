@@ -17,9 +17,7 @@ export function startBinanceWS(callbacks: {
   onFundingUpdate: (fundingRate: number) => void;
 }) {
   const streams = [
-    'btcusdt@kline_5m', 'btcusdt@markPrice',
-    'ethusdt@kline_5m',
-    'solusdt@kline_5m'
+    'btcusdt@kline_5m', 'btcusdt@markPrice'
   ];
   const wsUrl = `wss://fstream.binance.com/market/stream?streams=${streams.join('/')}`;
   
