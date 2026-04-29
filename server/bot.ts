@@ -33,17 +33,13 @@ let recentSignals: Signal[] = [];
 let activeTrades: Signal[] = [];
 
 // Track multiple assets
-const SYMBOLS = ['BTC/USDT:USDT', 'ETH/USDT:USDT', 'SOL/USDT:USDT'];
+const SYMBOLS = ['BTC/USDT:USDT'];
 
 let ohlcvData: Record<string, any[]> = {
-  'BTC/USDT:USDT': [],
-  'ETH/USDT:USDT': [],
-  'SOL/USDT:USDT': []
+  'BTC/USDT:USDT': []
 };
 let latestStochRSI: Record<string, {k: number, d: number}> = {
-  'BTC/USDT:USDT': {k:0, d:0},
-  'ETH/USDT:USDT': {k:0, d:0},
-  'SOL/USDT:USDT': {k:0, d:0}
+  'BTC/USDT:USDT': {k:0, d:0}
 };
 
 // Mutable multiplier values configurable via Telegram (now representing % moves)
@@ -280,8 +276,6 @@ export async function startBot() {
         
         let matchingSymbol = SYMBOLS[0];
         if (kline.symbol === 'BTCUSDT') matchingSymbol = 'BTC/USDT:USDT';
-        if (kline.symbol === 'ETHUSDT') matchingSymbol = 'ETH/USDT:USDT';
-        if (kline.symbol === 'SOLUSDT') matchingSymbol = 'SOL/USDT:USDT';
 
         updateKlineArray(ohlcvData[matchingSymbol], kline);
 
